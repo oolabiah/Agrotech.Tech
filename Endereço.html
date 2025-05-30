@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Define a codificação de caracteres para português -->
+  <meta charset="UTF-8" />
+  <!-- Responsividade em dispositivos móveis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Endereços da Empresa com Google Maps</title>
+  <link rel="stylesheet" href="endereço.css">
+
+  <!-- Estilos internos da página -->
+  <style>
+    /* Define estilo padrão para o corpo */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex; /* Layout em colunas */
+      height: 100vh;  /* Altura total da tela */
+    }
+
+    /* Estilo da caixa de lista de endereços */
+    #address-list {
+      width: 300px;
+      background-color: #f0f0f0;
+      padding: 20px;
+      overflow-y: auto; /* Adiciona rolagem se necessário */
+    }
+
+    /* Remove marcadores da lista */
+    #address-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    /* Espaçamento entre os itens da lista */
+    #address-list li {
+      margin-bottom: 15px;
+    }
+
+    /* Estilo dos links */
+    #address-list a {
+      text-decoration: none;
+      color: #0066cc;
+      cursor: pointer;
+    }
+
+    /* Efeito hover nos links */
+    #address-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* Estilo do contêiner do mapa */
+    #map {
+      flex-grow: 1;      /* Ocupa todo o espaço restante */
+      height: 100vh;     /* Altura total da tela */
+    }
+
+    /* Estilo do título da lista */
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <!-- Bloco da lista de endereços -->
+  <div id="address-list">
+    <h2>Endereços da Empresa</h2>
+    <ul>
+      <!-- Cada item da lista representa um endereço clicável -->
+      <li>
+        <a href="#" data-address="Rua XV de Novembro, 1000, Florianópolis, SC, Brasil" target="_blank">
+          Rua XV de Novembro, 1000 - Florianópolis
+        </a>
+      </li>
+      <li>
+        <a href="#" data-address="88020-000, Florianópolis, SC, Brasil" target="_blank">
+          CEP 88020-000 - Florianópolis
+        </a>
+      </li>
+      <li>
+        <a href="#" data-address="Av. Beira Mar, 500, Florianópolis, SC, Brasil" target="_blank">
+          Av. Beira Mar, 500 - Florianópolis
+        </a>
+      </li>
+    </ul>
+    <!-- Instrução para o usuário -->
+    <p>Clique no endereço para mostrar no mapa e abrir Google Maps em nova aba.</p>
+  </div>
+
+  <!-- Área onde o mapa será exibido -->
+  <div id="map"></div>
+
+  <!-- Scripts JavaScript -->
+  <script>
+    let map;       // Variável do mapa
+    let geocoder;  // Geocoder para converter endereço em coordenadas
+    let marker;    // Marcador no mapa
+
+    // Função de inicialização do Google Maps
+    function initMap() {
+      geocoder = new google.maps.Geocoder(); // Cria o geocoder
+
+      // Posição inicial do mapa (Florianópolis)
+      const initialPos = { lat: -27.5954, lng: -48.5480 };
+
+      // Cria o mapa dentro da div com id="map"
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+        center: initialPos, // Centraliza no ponto inicial
+      });
+
+      // Cria o marcador inicial
+      marker = new google.maps.Marker({
+        map: map,
+        position: initialPos,
+      });
+    }
+
+    // Função que mostra endereço no mapa
+    function showAddress(address) {
+      // Usa o geocoder para obter coordenadas do endereço
+      geocoder.geocode({ address: address }, (results, status) => {
+        if (status === "OK") {
+          const location = results[0].geometry.location;
+          map.setCenter(location);     // Centraliza o mapa no endereço
+          map.setZoom(15);             // Aumenta o zoom
+          marker.setPosition(location); // Move o marcador
+        } else {
+          alert("Endereço não encontrado: " + status);
+        }
+      });
+    }
+
+    // Adiciona eventos de clique para cada link da lista
+    document.querySelectorAll('#address-list a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault(); // Evita comportamento padrão do link
+        const address = e.target.getAttribute('data-address'); // Pega endereço do atributo
+        showAddress(address); // Mostra no mapa
+
+        // Abre o endereço no Google Maps em uma nova aba
+        const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+        window.open(mapsUrl, '_blank');
+      });
+    });
+  </script>
+
+  <!-- Script do Google Maps: substitua SUA_API_KEY_AQUI pela sua chave da API -->
+  <script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD*************&callback=initMap">
+</script>
+
+</body>
+</html>

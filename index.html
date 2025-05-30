@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>AGROTECH</title>
+
+  <style>
+    /* Ocultar seção inicialmente */
+    #saiba_mais {
+      display: none;
+      padding: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Animação de piscar */
+    @keyframes piscar {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .piscando {
+      animation: piscar 1s infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo-container">
+      <a href="#" class="logo">AGROTECH</a>
+      <button class="nav-toggle" id="menu-toggle">&#9776;</button>
+    </div>
+
+    <ul id="nav-links">
+      <li><a href="#" onclick="mostrarHome()">Home</a></li>
+      <li><a href="membros.html">Membros</a></li>
+      <li>
+        <a href="https://wa.me/5511999999999?text=Olá!%20Tenho%20interesse%20no%20sistema%20AGROTECH"
+           target="_blank" rel="noopener noreferrer">
+          Contato
+      <li><a href="endereço.html">Endereço</a></li>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- HOME / BANNER -->
+  <section id="home" class="banner">
+    <div class="texto">
+      <h1 class="titulo">
+        <span class="verde">AGRO</span><span class="amarelo">TECH</span>
+      </h1>
+      <h2 class="sub_titulo_1">SEJA AGRO, SEJA TECH</h2>
+      <h3 class="sub_titulo_2">
+        CONHEÇA NOSSO SISTEMA DE IRRIGAÇÃO INTELIGENTE, TRAZENDO SOLUÇÃO E INOVAÇÃO PARA O SEU NEGÓCIO
+      </h3>
+
+      <div class="botoes">
+        <button class="piscando" onclick="mostrarSaibaMais()">Saiba Mais</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAIBA MAIS (inicialmente escondido) -->
+  <section id="saiba_mais">
+    <h2>Saiba Mais sobre o AGROTECH</h2>
+    <p>
+      O <strong>AGROTECH</strong> é um projeto desenvolvido para otimizar o uso da água na agricultura, utilizando
+      tecnologia para captar, armazenar e distribuir água da chuva de forma automatizada e inteligente.
+    </p>
+    <p>
+      Nosso sistema conta com sensores que monitoram a umidade do solo, controlando a irrigação de forma eficiente.
+      Além disso, ele é alimentado por energia sustentável, tornando a proposta ainda mais ecológica.
+    </p>
+    <p>
+      Acreditamos que, com inovação e responsabilidade ambiental, podemos transformar o modo como a água é utilizada no
+      campo, garantindo mais produtividade e preservação do meio ambiente.
+    </p>
+    <button onclick="mostrarHome()">Voltar</button>
+  </section>
+
+  <!-- SCRIPT para alternar visibilidade -->
+  <script>
+    function mostrarSaibaMais() {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("saiba_mais").style.display = "block";
+    }
+
+    function mostrarHome() {
+      document.getElementById("saiba_mais").style.display = "none";
+      document.getElementById("home").style.display = "block";
+    }
+
+    // Menu toggle (para mobile)
+    const toggleBtn = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    toggleBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
